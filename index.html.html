@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Behavioral Psychology MCQs • Past Year Quiz</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;family=Poppins:wght@500;600&amp;display=swap');
+        
+        :root {
+            --primary: #6366f1;
+        }
+        
+        body {
+            font-family: 'Inter', system_ui, sans-serif;
+        }
+        
+        .title-font {
+            font-family: 'Poppins', system_ui, sans-serif;
+            font-weight: 600;
+        }
+
+        .question-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .option-btn {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .option-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+        }
+        
+        .option-btn.selected {
+            transform: scale(1.02);
+        }
+        
+        .option-btn.correct {
+            background-color: #dcfce7 !important;
+            border-color: #22c55e !important;
+            color: #166534;
+        }
+        
+        .option-btn.wrong {
+            background-color: #fee2e2 !important;
+            border-color: #ef4444 !important;
+            color: #991b1b;
+        }
+
+        .quiz-container {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+
+        .progress-bar {
+            transition: width 0.4s ease;
+        }
+
+        .section-header {
+            background: linear-gradient(90deg, #6366f1, #4f46e5);
+        }
+
+        .mcq-option {
+            border: 2px solid #e5e7eb;
+        }
+
+        .mcq-option:hover {
+            border-color: #6366f1;
+        }
+
+        .explanation-box {
+            animation: fadeIn 0.3s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .stat-card {
+            transition: transform 0.2s ease;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+    <!-- Header -->
+    <div class="bg-zinc-900 border-b border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-11 h-11 bg-indigo-600 rounded-2xl flex items-center justify-center">
+                    <i class="fa-solid fa-brain text-white text-3xl"></i>
+                </div>
+                <div>
+                    <h1 class="title-font text-2xl font-semibold tracking-tight">Behavioral Psychology</h1>
+                    <p class="text-zinc-400 text-sm -mt-1">Past Year MCQs • 2024-2025</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-x-2">
+                <div class="px-4 py-1.5 bg-zinc-900 border border-zinc-700 rounded-3xl text-sm flex items-center gap-x-2">
+                    <i class="fa-solid fa-question-circle text-indigo-400"></i>
+                    <span id="question-counter" class="font-mono font-medium">1 / 60</span>
+                </div>
+                
+                <button onclick="restartQuiz()" 
+                        class="px-4 py-2 text-sm flex items-center gap-x-2 bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 transition-colors rounded-3xl">
+                    <i class="fa-solid fa-redo text-xs"></i>
+                    <span class="hidden sm:inline">Restart</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 pt-8 pb-16">
+        
+        <!-- Progress -->
+        <div class="mb-6">
+            <div class="flex items-center justify-between text-sm mb-2 px-1">
+                <div class="text-zinc-400">Progress</div>
+                <div id="progress-text" class="font-mono text-indigo-400 font-medium">0%</div>
+            </div>
+            <div class="h-2.5 bg-zinc-800 rounded-full overflow-hidden">
+                <div id="progress-bar" 
+                     class="progress-bar h-2.5 bg-gradient-to-r from-indigo-500 to-violet-500 rounded-full w-0"
+                     style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Quiz Content -->
+        <div id="quiz-content">
+            
+            <!-- Question Card -->
+            <div class="question-card bg-zinc-900 border border-zinc-700 rounded-3xl p-7 shadow-xl">
+                
+                <!-- Section Badge -->
+                <div id="section-badge" 
+                     class="inline-flex items-center px-3.5 py-1 rounded-2xl text-xs font-semibold tracking-wider mb-4 bg-zinc-800 text-zinc-300">
+                    <!-- Dynamic -->
+                </div>
+                
+                <div id="question-text" 
+                     class="text-xl leading-tight font-medium text-white mb-7">
+                    <!-- Question text injected by JS -->
+                </div>
+                
+                <!-- Options -->
+                <div id="options-container" class="space-y-3">
+                    <!-- Options injected by JS -->
+                </div>
+                
+                <!-- Explanation -->
+                <div id="explanation-container" class="hidden mt-6 p-5 bg-zinc-950 border border-zinc-700 rounded-2xl">
+                    <div class="flex items-start gap-x-3">
+                        <div class="mt-0.5">
+                            <i class="fa-solid fa-lightbulb text-amber-400"></i>
+                        </div>
+                        <div>
+                            <div class="font-semibold text-amber-300 text-sm mb-1">Explanation</div>
+                            <div id="explanation-text" class="text-zinc-300 text-[15px] leading-relaxed"></div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <!-- Navigation -->
+            <div class="flex items-center justify-between mt-6 px-1">
+                <button onclick="prevQuestion()" 
+                        id="prev-btn"
+                        class="px-6 py-3 flex items-center gap-x-2 text-sm font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-700 transition-all active:scale-[0.985] rounded-3xl disabled:opacity-40">
+                    <i class="fa-solid fa-arrow-left"></i>
+                    <span>Previous</span>
+                </button>
+                
+                <button onclick="nextQuestion()" 
+                        id="next-btn"
+                        class="px-8 py-3 flex items-center gap-x-2 text-sm font-semibold bg-white text-zinc-900 hover:bg-zinc-100 transition-all active:scale-[0.985] rounded-3xl shadow-inner">
+                    <span id="next-btn-text">Next Question</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+            
+        </div>
+        
+        <!-- Results Screen -->
+        <div id="results-screen" class="hidden">
+            <div class="bg-zinc-900 border border-zinc-700 rounded-3xl p-8 text-center">
+                <div class="mx-auto w-20 h-20 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-full flex items-center justify-center mb-6">
+                    <i class="fa-solid fa-tachometer-alt text-white text-4xl"></i>
+                </div>
+                
+                <h2 class="text-3xl font-semibold tracking-tight mb-2">Quiz Complete!</h2>
+                <p class="text-zinc-400 mb-8">Here's how you did on the Behavioral Psychology MCQs</p>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-md mx-auto mb-8">
+                    <div class="stat-card bg-zinc-950 border border-zinc-700 rounded-2xl p-5">
+                        <div class="text-4xl font-semibold text-white" id="final-score">0</div>
+                        <div class="text-zinc-400 text-sm mt-1">Score</div>
+                    </div>
+                    <div class="stat-card bg-zinc-950 border border-zinc-700 rounded-2xl p-5">
+                        <div class="text-4xl font-semibold text-emerald-400" id="final-percentage">0</div>
+                        <div class="text-zinc-400 text-sm mt-1">Accuracy</div>
+                    </div>
+                    <div class="stat-card bg-zinc-950 border border-zinc-700 rounded-2xl p-5">
+                        <div class="text-4xl font-semibold text-white" id="final-correct">0/60</div>
+                        <div class="text-zinc-400 text-sm mt-1">Correct</div>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-3 justify-center">
+                    <button onclick="restartQuiz()" 
+                            class="px-8 py-3.5 bg-white text-zinc-900 font-semibold rounded-3xl flex items-center justify-center gap-x-2 hover:bg-zinc-100 transition-colors">
+                        <i class="fa-solid fa-redo"></i>
+                        <span>Try Again</span>
+                    </button>
+                    
+                    <button onclick="window.location.reload()" 
+                            class="px-8 py-3.5 bg-zinc-800 hover:bg-zinc-700 border border-zinc-600 font-medium rounded-3xl flex items-center justify-center gap-x-2 transition-colors">
+                        <span>Close Quiz</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            document.documentElement.style.setProperty('--accent', '#6366f1');
+        }
+        
+        // Questions Data - Cleaned and structured from your PDF
+        const questions = [
+            {
+                id: 1,
+                section: "Personality, Big Five & Attribution Error",
+                question: "Which of the following is a projective test of personality?",
+                options: [
+                    "Cattell's 16 PF test",
+                    "Eysenck's personality inventory",
+                    "Minnesota Multiple Personality Inventory",
+                    "International personality disorder examination",
+                    "Thematic Apperception test"
+                ],
+                correct: 4, // index 4 = Thematic Apperception test
+                explanation: "The Thematic Apperception Test (TAT) is a classic projective test where individuals interpret ambiguous pictures to reveal unconscious motives and personality."
+            },
+            {
+                id: 2,
+                section: "Personality, Big Five & Attribution Error",
+                question: "Which of the following is not a part of the Big Five personality traits?",
+                options: [
+                    "Carefulness",
+                    "Openness",
+                    "Agreeableness",
+                    "Neuroticism",
+                    "Conscientiousness"
+                ],
+                correct: 0,
+                explanation: "The Big Five traits are: Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism (OCEAN). 'Carefulness' is not one of them."
+            },
+            {
+                id: 3,
+                section: "Personality, Big Five & Attribution Error",
+                question: "Which of the following personality disorders is termed as erratic and dramatic?",
+                options: [
+                    "Cluster D",
+                    "Cluster B",
+                    "Cluster A",
+                    "Cluster C",
+                    "Cluster E"
+                ],
+                correct: 1,
+                explanation: "Cluster B personality disorders (Antisocial, Borderline, Histrionic, Narcissistic) are described as erratic, dramatic, and emotional."
+            },
+            {
+                id: 4,
+                section: "Personality, Big Five & Attribution Error",
+                question: "Which of the following is true about Fundamental attribution error?",
+                options: [
+                    "Attributing other's behaviour to the context in which the behaviour occurs",
+                    "Attributing others behaviour to their personality and context",
+                    "Attributing one's own behaviour to their own personality",
+                    "Attributing one's own behaviour to their personality and context",
+                    "Attributing other's behaviour to their personal disposition"
+                ],
+                correct: 4,
+                explanation: "Fundamental Attribution Error is the tendency to over-emphasize personality traits and under-emphasize situational factors when explaining others' behavior."
+            },
+            {
+                id: 5,
+                section: "Learning, Conditioning & Social Learning",
+                question: "The following is a form of aversion therapy:",
+                options: [
+                    "Disulfiram in alcoholism",
+                    "Token economy",
+                    "Use of the enuretic alarm for treating bed wetting in children",
+                    "Biofeedback",
+                    "Response cost"
+                ],
+                correct: 0,
+                explanation: "Disulfiram (Antabuse) creates an aversive reaction when alcohol is consumed, making it a form of aversion therapy."
+            },
+            {
+                id: 6,
+                section: "Learning, Conditioning & Social Learning",
+                question: "In classical conditioning:",
+                options: [
+                    "A previously neutral stimulus is defined as a conditioned stimulus when it starts to elicit a response.",
+                    "Trial and error learning is involved",
+                    "Higher order conditioning refers to learning that requires cognitive learning.",
+                    "The conditioned stimulus follows the presentation of unconditioned stimulus.",
+                    "Voluntary responses may get linked to environmental stimuli."
+                ],
+                correct: 0,
+                explanation: "In classical conditioning, a neutral stimulus becomes a conditioned stimulus (CS) after being repeatedly paired with an unconditioned stimulus (US)."
+            },
+            {
+                id: 7,
+                section: "Learning, Conditioning & Social Learning",
+                question: "Use of positive punishment to manage maladaptive behaviour in children leads to:",
+                options: [
+                    "Vicarious learning of aggressive behaviour",
+                    "Compliance in aggressive children",
+                    "Chaining",
+                    "Differential reinforcement of other behaviours (DRO)",
+                    "Shaping"
+                ],
+                correct: 0,
+                explanation: "Positive punishment (adding an aversive stimulus) can model aggressive behavior through vicarious learning, especially in children."
+            },
+            {
+                id: 8,
+                section: "Learning, Conditioning & Social Learning",
+                question: "Cognitive processing during social learning includes all except:",
+                options: [
+                    "Motivation to act",
+                    "Judgement",
+                    "Semantic encoding of observed behaviour",
+                    "Attention",
+                    "Retention and rehearsal"
+                ],
+                correct: 1,
+                explanation: "Bandura's social learning theory includes attention, retention, reproduction, and motivation. 'Judgement' is not a core cognitive process in the model."
+            },
+            {
+                id: 9,
+                section: "Perception, Gestalt & Attention",
+                question: "What is inattentional blindness?",
+                options: [
+                    "A developmental disease impacting one's vision.",
+                    "Looking at the big picture as opposed to focusing on smaller details.",
+                    "Failing to see objects when one's attention is directed elsewhere.",
+                    "Focusing awareness on an unknown stimulus.",
+                    "One's ability to focus one's attention on multiple sources."
+                ],
+                correct: 2,
+                explanation: "Inattentional blindness is the failure to notice a fully visible object because attention is engaged on another task or object."
+            },
+            {
+                id: 10,
+                section: "Perception, Gestalt & Attention",
+                question: "Which of the following is not a principle of Gestalt psychology?",
+                options: [
+                    "Closure",
+                    "Continuity",
+                    "Similarity",
+                    "Connectedness",
+                    "Gradient"
+                ],
+                correct: 4,
+                explanation: "Gestalt principles include proximity, similarity, continuity, closure, and connectedness. 'Gradient' is not a standard Gestalt principle."
+            },
+            {
+                id: 11,
+                section: "Perception, Gestalt & Attention",
+                question: "The ___________ is the lowest level of a stimulation that an organism can detect.",
+                options: [
+                    "Minimal activity stimulus",
+                    "Sensory adaptation",
+                    "All-or-nothing phenomenon",
+                    "Difference threshold",
+                    "Absolute threshold"
+                ],
+                correct: 4,
+                explanation: "The absolute threshold is the minimum stimulation needed to detect a stimulus 50% of the time."
+            },
+            {
+                id: 12,
+                section: "Perception, Gestalt & Attention",
+                question: "During which of the following activities might you use selective attention?",
+                options: [
+                    "Driving on a busy freeway during rush hour",
+                    "All of these activities would employ selective attention",
+                    "Attending a concert at a sold out show",
+                    "Quietly reading a book",
+                    "Having a conversation with a friend at a loud party"
+                ],
+                correct: 1,
+                explanation: "Selective attention is used in almost any situation where we focus on one stimulus while ignoring others — all options require it."
+            },
+            {
+                id: 13,
+                section: "Perception, Gestalt & Attention",
+                question: "......... are the mental categories we form to group objects, events and situations that share common features.",
+                options: [
+                    "Concepts",
+                    "Prototypes",
+                    "Rules",
+                    "Attributes"
+                ],
+                correct: 0,
+                explanation: "Concepts are mental categories that group objects, events, and situations sharing common features."
+            },
+            {
+                id: 14,
+                section: "Concepts, Thinking & Problem Solving",
+                question: "All of the following is true about learned concepts except:",
+                options: [
+                    "Can be taught",
+                    "Can be learnt by experience",
+                    "Inborn concepts",
+                    "None of the above"
+                ],
+                correct: 2,
+                explanation: "Learned concepts are acquired through teaching or experience. Inborn concepts are not learned."
+            },
+            {
+                id: 15,
+                section: "Concepts, Thinking & Problem Solving",
+                question: "Controlled thinking can be described as:",
+                options: [
+                    "Unrealistic",
+                    "Logic",
+                    "It doesn't need attention",
+                    "None of the above"
+                ],
+                correct: 1,
+                explanation: "Controlled thinking is deliberate, effortful, and logical (System 2 thinking)."
+            },
+            {
+                id: 16,
+                section: "Concepts, Thinking & Problem Solving",
+                question: "Tendency to think of an object as being used only for its usual purpose:",
+                options: [
+                    "Generalization",
+                    "Overextension",
+                    "Incubation effect",
+                    "Functional fixedness"
+                ],
+                correct: 3,
+                explanation: "Functional fixedness is the cognitive bias of seeing objects only in their typical function, limiting problem-solving creativity."
+            },
+            {
+                id: 17,
+                section: "Concepts, Thinking & Problem Solving",
+                question: "All of the following are barriers to problem solving except:",
+                options: [
+                    "Mental sets",
+                    "Controlled thinking",
+                    "Confirmation bias",
+                    "Functional fixedness"
+                ],
+                correct: 1,
+                explanation: "Controlled thinking actually helps problem solving. Mental sets, confirmation bias, and functional fixedness are common barriers."
+            },
+            {
+                id: 18,
+                section: "Concepts, Thinking & Problem Solving",
+                question: "The most typical and familiar members of a category:",
+                options: [
+                    "Prototype",
+                    "Concept",
+                    "Rule",
+                    "All of the above"
+                ],
+                correct: 0,
+                explanation: "A prototype is the most typical and representative example of a category."
+            },
+            {
+                id: 19,
+                section: "Concepts, Thinking & Problem Solving",
+                question: "Which among the following is defined as the basic building block or unit of intelligent behaviour?",
+                options: [
+                    "Adaptation",
+                    "Assimilation",
+                    "Equilibration",
+                    "Accommodation",
+                    "Schema"
+                ],
+                correct: 4,
+                explanation: "In Piaget's theory, a schema is the basic building block of intelligent behavior and cognitive development."
+            },
+            {
+                id: 20,
+                section: "Intelligence",
+                question: "Flynn effect refers to which of the following phenomenon?",
+                options: [
+                    "Increasing IQ with successive generations",
+                    "Changes of IQ with cultural variations",
+                    "If an IQ test is repeated on the same individual the score increases",
+                    "Changes of IQ with language",
+                    "If IQ of parents is high, then the IQ of the child is high"
+                ],
+                correct: 0,
+                explanation: "The Flynn effect is the observed rise in IQ scores over generations, attributed to better nutrition, education, and environmental factors."
+            },
+            {
+                id: 21,
+                section: "Intelligence",
+                question: "Wechsler Adult intelligence scales (WAIS-R) are for People Aged:",
+                options: [
+                    "15 and over",
+                    "7 to 16 year olds",
+                    "18 and over",
+                    "3 to 7 year olds",
+                    "16 and over"
+                ],
+                correct: 2,
+                explanation: "WAIS (Wechsler Adult Intelligence Scale) is designed for adults aged 16 and older (some versions start at 16)."
+            },
+            {
+                id: 22,
+                section: "Intelligence",
+                question: "Factors affecting intelligence including all of the following except:",
+                options: [
+                    "Heredity and environmental",
+                    "Sex",
+                    "Residence",
+                    "Race",
+                    "Age"
+                ],
+                correct: 3,
+                explanation: "While heredity, environment, age, sex, and residence can influence IQ scores, 'Race' as a biological category is not considered a direct causal factor in modern psychology."
+            },
+            {
+                id: 23,
+                section: "Intelligence",
+                question: "Borderline IQ scores:",
+                options: [
+                    "20-35",
+                    "90-110",
+                    "70-80",
+                    "below 20",
+                    "50-70"
+                ],
+                correct: 2,
+                explanation: "Borderline intellectual functioning is typically classified in the 70-80 IQ range."
+            },
+            {
+                id: 24,
+                section: "Intelligence",
+                question: ".........generate invention, discovery, and other creative endeavours:",
+                options: [
+                    "Analytical abilities",
+                    "Creative abilities",
+                    "Practicum abilities",
+                    "Behavioral abilities"
+                ],
+                correct: 1,
+                explanation: "Creative abilities (part of Sternberg's Triarchic Theory) involve generating novel ideas and solutions."
+            },
+            {
+                id: 25,
+                section: "Language & Brain",
+                question: "Early studies of brain damage indicated that patients who lacked the ability to easily understand spoken language often had damage to:",
+                options: [
+                    "An area known as Broca's area",
+                    "The right side of the brain",
+                    "An area known as Wernicke's area",
+                    "The cerebellum"
+                ],
+                correct: 2,
+                explanation: "Wernicke's area (in the temporal lobe) is primarily responsible for language comprehension. Damage leads to Wernicke's aphasia."
+            },
+            {
+                id: 26,
+                section: "Language & Brain",
+                question: "A patient repeats whatever the examiner says and seems to have no understanding of it. This phenomenon is described as:",
+                options: [
+                    "Perseveration",
+                    "Logoclonia",
+                    "Echopraxia",
+                    "Echolalia",
+                    "Dysarthria"
+                ],
+                correct: 3,
+                explanation: "Echolalia is the involuntary repetition of another person's spoken words, often seen in autism or certain aphasias."
+            },
+            {
+                id: 27,
+                section: "Language & Brain",
+                question: "Expressive dysphasia is characterised by:",
+                options: [
+                    "Fluent speech",
+                    "Good repetition",
+                    "Intact comprehension",
+                    "Unaffected naming",
+                    "Unaffected writing"
+                ],
+                correct: 0,
+                explanation: "Expressive (Broca's) dysphasia is characterized by non-fluent, effortful speech with relatively preserved comprehension."
+            },
+            {
+                id: 28,
+                section: "Language & Brain",
+                question: "Repetition of last syllable by the patient without any apparent purpose is called which of the following?",
+                options: [
+                    "Logoclonia",
+                    "Pallilalia",
+                    "Neologism",
+                    "Perseveration",
+                    "Echolalia"
+                ],
+                correct: 1,
+                explanation: "Pallilalia is the repetition of the last syllable or word, often seen in neurological conditions like Parkinson's."
+            },
+            {
+                id: 29,
+                section: "Language & Brain",
+                question: "Regarding the development of language:",
+                options: [
+                    "Children learn language by imitating adults",
+                    "Children acquire language through conditioning",
+                    "Children form a hypothesis about a rule of language, test it and retain it if it works",
+                    "There is indirect evidence for the existence of a critical period for language acquisition",
+                    "All of the above"
+                ],
+                correct: 4,
+                explanation: "All statements reflect valid theories or evidence regarding language acquisition (imitation, conditioning, hypothesis testing, and critical period)."
+            },
+            {
+                id: 30,
+                section: "Dreams, Sleep & Motivation",
+                question: "What did Freud regard as the primary function of dreams?",
+                options: [
+                    "Enhanced cognition",
+                    "Wish fulfillment",
+                    "Memory suppression",
+                    "Enhanced self-esteem"
+                ],
+                correct: 1,
+                explanation: "Freud believed dreams primarily serve as wish fulfillment, allowing unconscious desires to be expressed symbolically."
+            },
+            {
+                id: 31,
+                section: "Dreams, Sleep & Motivation",
+                question: "Which of the following is NOT a sleep disorder?",
+                options: [
+                    "Narcolepsy",
+                    "Somnambulism",
+                    "Sleep apnea",
+                    "Epilepsy"
+                ],
+                correct: 3,
+                explanation: "Epilepsy is a neurological disorder involving seizures, not classified as a primary sleep disorder (though it can affect sleep)."
+            },
+            {
+                id: 32,
+                section: "Dreams, Sleep & Motivation",
+                question: "A typical night's sleep comprises of ultradian cycles each lasting approximately:",
+                options: [
+                    "60 minutes",
+                    "30 minutes",
+                    "90 minutes",
+                    "40 minutes",
+                    "10 minutes"
+                ],
+                correct: 2,
+                explanation: "A normal sleep cycle (ultradian rhythm) lasts about 90 minutes, progressing through NREM and REM stages."
+            },
+            {
+                id: 33,
+                section: "Dreams, Sleep & Motivation",
+                question: "What is polysomnography?",
+                options: [
+                    "The technique of recording activity during sleep",
+                    "The third stage of sleep",
+                    "The third stage of awareness",
+                    "A medical condition which produces insomnia",
+                    "A form of treatment for sleep apnea"
+                ],
+                correct: 0,
+                explanation: "Polysomnography (PSG) is the comprehensive recording of biophysiological changes during sleep (EEG, EOG, EMG, etc.)."
+            },
+            {
+                id: 34,
+                section: "Dreams, Sleep & Motivation",
+                question: "According to Maslow's Hierarchy of Needs Theory, at the times of natural disasters which of the following will be the most appropriate intervention?",
+                options: [
+                    "Provision of food and shelter",
+                    "CBT to enhance self-esteem",
+                    "Group therapy to enhance love and belongingness",
+                    "Behavioural therapy to enhance safety behaviour",
+                    "Meditation to achieve self-actualization"
+                ],
+                correct: 0,
+                explanation: "In disasters, basic physiological and safety needs (food, shelter, safety) must be met first before higher needs."
+            },
+            {
+                id: 35,
+                section: "Dreams, Sleep & Motivation",
+                question: "The socio-psychological approach is adopted by which of the following theories of motivation?",
+                options: [
+                    "Maslow's hierarchy of needs",
+                    "Drive reduction theory",
+                    "Arousal reduction theory",
+                    "Needs theory",
+                    "Homeostatic theory"
+                ],
+                correct: 0,
+                explanation: "Maslow's hierarchy takes a socio-psychological approach, considering social and psychological needs beyond basic drives."
+            },
+            {
+                id: 36,
+                section: "Motivation & Emotion (Part 1)",
+                question: "A striving towards a particular state or action that is experienced as a desire is:",
+                options: [
+                    "Instinct",
+                    "Need",
+                    "Motivation",
+                    "Will"
+                ],
+                correct: 2,
+                explanation: "Motivation is the internal process that initiates, guides, and maintains goal-directed behavior."
+            },
+            {
+                id: 37,
+                section: "Motivation & Emotion (Part 1)",
+                question: "Drive reduction theories of learning & motivation are based on:",
+                options: [
+                    "The study of acquired needs",
+                    "The need to fulfill extrinsic needs",
+                    "The concept of self actualisation",
+                    "The principle of homeostasis",
+                    "Depends on personality traits"
+                ],
+                correct: 3,
+                explanation: "Drive reduction theory is based on the principle of homeostasis — reducing internal tension caused by unmet biological needs."
+            },
+            {
+                id: 38,
+                section: "Motivation & Emotion (Part 1)",
+                question: "Which one of the following is a secondary drive?",
+                options: [
+                    "Sex",
+                    "Play",
+                    "Food",
+                    "Water",
+                    "None of the above"
+                ],
+                correct: 1,
+                explanation: "Secondary drives are learned (e.g., money, achievement). Primary drives are biological (food, water, sex). Play is often considered learned/social."
+            },
+            {
+                id: 39,
+                section: "Motivation & Emotion (Part 1)",
+                question: "Which one among the following is defined by how much we approve of ourselves and how worthy we think of ourselves?",
+                options: [
+                    "Self-efficacy",
+                    "Self esteem",
+                    "Self-image",
+                    "Self actualisation",
+                    "Self-awareness"
+                ],
+                correct: 1,
+                explanation: "Self-esteem refers to our overall sense of self-worth and personal value."
+            },
+            {
+                id: 40,
+                section: "Emotion Theories",
+                question: "According to the James-Lange theory of emotion:",
+                options: [
+                    "emotional experience and physiological arousal occur at the same time",
+                    "emotional experience precedes physiological arousal",
+                    "physiological arousal precedes emotional experience",
+                    "we cannot experience different emotions"
+                ],
+                correct: 2,
+                explanation: "James-Lange theory proposes that we experience emotions after we notice our physiological arousal (e.g., 'I am trembling, therefore I am afraid')."
+            },
+            {
+                id: 41,
+                section: "Emotion Theories",
+                question: "Which of the following theories proposed six basic emotions?",
+                options: [
+                    "Ekman",
+                    "Lorenz",
+                    "Cannon and Bard",
+                    "James and Lange",
+                    "Ainsworth"
+                ],
+                correct: 0,
+                explanation: "Paul Ekman identified six basic universal emotions: happiness, sadness, fear, anger, surprise, and disgust."
+            },
+            {
+                id: 42,
+                section: "Emotion Theories",
+                question: "Which one of the following is a secondary emotion?",
+                options: [
+                    "Fear",
+                    "Joy",
+                    "Love",
+                    "Sadness",
+                    "Anger"
+                ],
+                correct: 2,
+                explanation: "Love is often considered a secondary or complex emotion, while fear, joy, sadness, and anger are primary/basic emotions."
+            },
+            {
+                id: 43,
+                section: "Emotion Theories",
+                question: "In studies on arousal levels related to different emotions, which emotion produces the maximum rise in Temperature compared to all other emotions?",
+                options: [
+                    "Sadness",
+                    "Disgust",
+                    "Anger",
+                    "Love",
+                    "Fear"
+                ],
+                correct: 2,
+                explanation: "Anger is associated with the highest increase in physiological arousal and body temperature among basic emotions."
+            },
+            {
+                id: 44,
+                section: "Emotion Theories",
+                question: "The following are true of psychology of the theories of emotions:",
+                options: [
+                    "Lazarus theory of emotions emphasized the appraisal of the situation as the Main mechanism for the emotional experience",
+                    "Primary emotions do not require cognitive processing",
+                    "According to schachter and singer theory of emotions , emotions result from facial expressions",
+                    "The James –Lange theory explains the cognitive basis of emotions",
+                    "The Cannon-Bard theory states that the experience of emotions is dependent on Feedback from the viscera"
+                ],
+                correct: 0,
+                explanation: "Lazarus' cognitive appraisal theory emphasizes that the way we appraise a situation determines our emotional response."
+            },
+            {
+                id: 45,
+                section: "Stress",
+                question: "Extreme fatigue, exhaustion and burnout are all signs of:",
+                options: [
+                    "Short term stress",
+                    "Long term stress",
+                    "Behavioral stress",
+                    "Emotional stress"
+                ],
+                correct: 1,
+                explanation: "Chronic/long-term stress leads to burnout, exhaustion, and fatigue due to sustained activation of the stress response."
+            },
+            {
+                id: 46,
+                section: "Stress",
+                question: "Which of the following statements is false in relation to stress?",
+                options: [
+                    "When under stress, the entire body becomes tense and posture changes.",
+                    "Large amounts of time spent in front of a computer can result in eyestrain headaches.",
+                    "Tension uses up energy, but the energy is largely productive.",
+                    "Muscle tension affects our ability to function well."
+                ],
+                correct: 2,
+                explanation: "Tension from stress is often unproductive and can impair performance rather than enhance it."
+            },
+            {
+                id: 47,
+                section: "Stress",
+                question: "Which of the following is a symptom of long term stress?",
+                options: [
+                    "Dry mouth",
+                    "Headaches",
+                    "Nausea",
+                    "Increased sweating"
+                ],
+                correct: 1,
+                explanation: "Chronic headaches are a common symptom of long-term stress, along with other physical manifestations."
+            },
+            {
+                id: 48,
+                section: "Stress",
+                question: "The best way to protect the body from the harmful effects of stress is to:",
+                options: [
+                    "Learn how to avoid it",
+                    "Learn how to manage it",
+                    "Take your anger out on inanimate objects",
+                    "Take a long walk and bottle up your frustration"
+                ],
+                correct: 1,
+                explanation: "Stress management techniques (exercise, mindfulness, social support, etc.) are more effective than trying to completely avoid stress."
+            },
+            {
+                id: 49,
+                section: "Stress",
+                question: "Physiological reactions to stress include all of the following, except:",
+                options: [
+                    "Increased metabolic rate",
+                    "Increased heart rate",
+                    "Constriction of pupil",
+                    "Secretion of endorphins and ACTH",
+                    "Release of extra sugar from the liver"
+                ],
+                correct: 2,
+                explanation: "During stress, pupils usually dilate (not constrict) to improve vision and awareness. Constriction would be parasympathetic."
+            },
+            {
+                id: 50,
+                section: "Defence Mechanisms",
+                question: "It's so unfair! My mum doesn't care how much I cry and scream, she won't get me a car. She doesn't even care about me! She hates me! What defence mechanism does this demonstrate?",
+                options: [
+                    "Sublimation",
+                    "Rationalisation",
+                    "Repression",
+                    "Regression",
+                    "Identification"
+                ],
+                correct: 3,
+                explanation: "This is regression — reverting to childlike, immature behavior (crying and screaming) when facing frustration."
+            },
+            {
+                id: 51,
+                section: "Defence Mechanisms",
+                question: "I'm sure my boyfriend has been cheating on me. When I find out he'll be sorry. Oh yeah and I need to buy my husband a birthday present... What defence mechanism am I experiencing?",
+                options: [
+                    "Reaction Formation",
+                    "Withdrawal",
+                    "Projection",
+                    "Denial",
+                    "Rationalization"
+                ],
+                correct: 3,
+                explanation: "This shows denial — refusing to acknowledge the painful reality of the situation."
+            },
+            {
+                id: 52,
+                section: "Defence Mechanisms",
+                question: "The way she spoke to me was completely unacceptable, but she's going through a tough time at the moment. I'd react the same way if my mother had just died. What defence mechanism am I expressing?",
+                options: [
+                    "Regression",
+                    "Identification",
+                    "Displacement",
+                    "Repression",
+                    "Humor"
+                ],
+                correct: 2,
+                explanation: "This is rationalization — justifying unacceptable behavior by providing reasonable excuses."
+            },
+            {
+                id: 53,
+                section: "Defence Mechanisms",
+                question: "Argh, my mother-in-law has come to stay for the weekend and she's driving me crazy. I'm just staying out of the way by doing the housework... What defence mechanism does this illustrate?",
+                options: [
+                    "Rationalisation",
+                    "Repression",
+                    "Denial",
+                    "Sublimation",
+                    "Projection"
+                ],
+                correct: 3,
+                explanation: "This can be seen as sublimation — channeling unacceptable impulses (anger) into socially acceptable activities (housework)."
+            },
+            {
+                id: 54,
+                section: "Defence Mechanisms",
+                question: "There is this girl at work who I hate so much... Strangely, she's now one of my best friends... What defence mechanism does this reveal?",
+                options: [
+                    "Withdrawal",
+                    "Projection",
+                    "Sublimation",
+                    "Reaction Formation",
+                    "Denial"
+                ],
+                correct: 3,
+                explanation: "Reaction formation — behaving in the opposite way of one's true (negative) feelings."
+            },
+            {
+                id: 55,
+                section: "Defence Mechanisms",
+                question: "I failed my maths exam, but I'm not that bothered. It wasn't my fault; it was Mr Lobb who can't teach... What defence mechanism does this display?",
+                options: [
+                    "Regression",
+                    "Reaction Formation",
+                    "Rationalisation",
+                    "Denial",
+                    "Substitution"
+                ],
+                correct: 2,
+                explanation: "Rationalization — creating logical excuses to justify failure and protect self-esteem."
+            },
+            {
+                id: 56,
+                section: "Defence Mechanisms",
+                question: "Which of these might be considered a mature defence mechanism?",
+                options: [
+                    "Humor",
+                    "Projection",
+                    "Acting out",
+                    "Passive aggressive"
+                ],
+                correct: 0,
+                explanation: "Humor is considered a mature defense mechanism as it allows dealing with difficult emotions in a socially acceptable and healthy way."
+            },
+            {
+                id: 57,
+                section: "Defence Mechanisms",
+                question: "The defense mechanism of 'regression' involves what behavior?",
+                options: [
+                    "Acting as you would have at a younger age.",
+                    "Acting as you did before an event, pretending that nothing has happened.",
+                    "Behaving as a historical figure might have.",
+                    "Excessive thinking about the situation."
+                ],
+                correct: 0,
+                explanation: "Regression involves reverting to behaviors characteristic of an earlier stage of development when facing stress."
+            },
+            {
+                id: 58,
+                section: "Defence Mechanisms",
+                question: "Separating one set of negative feelings from other feelings is an example of which defense mechanism?",
+                options: [
+                    "Sublimation",
+                    "Isolation of affect",
+                    "Splitting",
+                    "Projection"
+                ],
+                correct: 1,
+                explanation: "Isolation of affect is separating the emotional component from a thought or memory to avoid feeling the associated emotion."
+            },
+            {
+                id: 59,
+                section: "Defence Mechanisms",
+                question: "Which sentence best describes rationalisation as a defense mechanism?",
+                options: [
+                    "Accepting a new situation.",
+                    "Finding justification for an event or feelings.",
+                    "Finding out who is to blame for an event.",
+                    "Finding solutions for a certain problem."
+                ],
+                correct: 1,
+                explanation: "Rationalization involves creating logical or acceptable explanations for behaviors, thoughts, or feelings that are actually unacceptable."
+            },
+            {
+                id: 60,
+                section: "Defence Mechanisms",
+                question: "Which type of defense mechanism is the following fact? Going back to childhood and crying like a child.",
+                options: [
+                    "Reaction formation",
+                    "Regression",
+                    "Resistance",
+                    "Repression"
+                ],
+                correct: 1,
+                explanation: "This is a clear example of regression — returning to an earlier, childlike way of coping with stress."
+            }
+        ];
+
+        // Current state
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let userAnswers = [];
+        let answered = false;
+
+        // Initialize the quiz
+        function initQuiz() {
+            initializeTailwind();
+            showQuestion(currentQuestionIndex);
+            
+            // Keyboard support
+            document.addEventListener('keydown', function(e) {
+                if (e.key === "ArrowRight" && !document.getElementById('next-btn').disabled) {
+                    nextQuestion();
+                }
+                if (e.key === "ArrowLeft") {
+                    prevQuestion();
+                }
+            });
+        }
+
+        function showQuestion(index) {
+            const q = questions[index];
+            answered = false;
+            
+            // Update progress
+            const progress = ((index) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-text').innerText = `${Math.round(progress)}%`;
+            document.getElementById('question-counter').innerText = `${index + 1} / ${questions.length}`;
+            
+            // Section badge
+            document.getElementById('section-badge').innerHTML = `
+                <span class="px-3 py-1 text-xs font-bold tracking-[1px]">${q.section}</span>
+            `;
+            
+            // Question text
+            document.getElementById('question-text').innerHTML = `
+                <span class="font-mono text-sm text-indigo-400 mr-2">Q${q.id}</span> 
+                ${q.question}
+            `;
+            
+            // Options
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+            
+            q.options.forEach((option, i) => {
+                const btn = document.createElement('button');
+                btn.className = `option-btn w-full text-left px-5 py-4 rounded-2xl bg-zinc-800 border border-zinc-700 hover:border-indigo-500 flex items-start gap-x-4 group`;
+                btn.innerHTML = `
+                    <div class="w-6 h-6 flex-shrink-0 mt-0.5 rounded-full border border-zinc-600 flex items-center justify-center text-xs font-mono group-hover:border-indigo-400">
+                        ${String.fromCharCode(65 + i)}
+                    </div>
+                    <div class="text-[15.5px] leading-snug text-left">${option}</div>
+                `;
+                
+                btn.onclick = () => selectAnswer(i, btn, q);
+                optionsContainer.appendChild(btn);
+            });
+            
+            // Hide explanation
+            document.getElementById('explanation-container').classList.add('hidden');
+            
+            // Update navigation buttons
+            document.getElementById('prev-btn').disabled = (index === 0);
+            
+            const nextBtn = document.getElementById('next-btn');
+            const nextText = document.getElementById('next-btn-text');
+            
+            if (index === questions.length - 1) {
+                nextText.innerText = "Finish Quiz";
+                nextBtn.classList.add('!bg-emerald-500', '!text-white', 'hover:!bg-emerald-600');
+            } else {
+                nextText.innerText = "Next Question";
+                nextBtn.classList.remove('!bg-emerald-500', '!text-white', 'hover:!bg-emerald-600');
+            }
+        }
+
+        function selectAnswer(selectedIndex, btnElement, questionData) {
+            if (answered) return;
+            answered = true;
+            
+            const optionsContainer = document.getElementById('options-container');
+            const allBtns = optionsContainer.querySelectorAll('button');
+            
+            const isCorrect = selectedIndex === questionData.correct;
+            
+            // Disable all buttons
+            allBtns.forEach(b => b.disabled = true);
+            
+            // Highlight correct and wrong
+            allBtns.forEach((b, idx) => {
+                if (idx === questionData.correct) {
+                    b.classList.add('correct', '!border-emerald-500');
+                    b.classList.remove('border-zinc-700');
+                } else if (idx === selectedIndex && !isCorrect) {
+                    b.classList.add('wrong', '!border-red-500');
+                    b.classList.remove('border-zinc-700');
+                }
+            });
+            
+            // Show explanation
+            const explanationBox = document.getElementById('explanation-container');
+            const explanationText = document.getElementById('explanation-text');
+            
+            explanationText.innerHTML = questionData.explanation;
+            explanationBox.classList.remove('hidden');
+            explanationBox.classList.add('explanation-box');
+            
+            // Update score
+            if (isCorrect) {
+                score++;
+            }
+            
+            // Save answer
+            userAnswers[currentQuestionIndex] = {
+                selected: selectedIndex,
+                correct: questionData.correct,
+                isCorrect: isCorrect
+            };
+            
+            // Auto advance after delay on last question? No, let user click Next
+        }
+
+        function nextQuestion() {
+            if (!answered && currentQuestionIndex < questions.length - 1) {
+                // If not answered, still allow moving forward but don't count score
+                userAnswers[currentQuestionIndex] = { selected: null, correct: questions[currentQuestionIndex].correct, isCorrect: false };
+            }
+            
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(currentQuestionIndex);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                showQuestion(currentQuestionIndex);
+            }
+        }
+
+        function showResults() {
+            document.getElementById('quiz-content').classList.add('hidden');
+            document.getElementById('results-screen').classList.remove('hidden');
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            
+            document.getElementById('final-score').innerText = `${score}`;
+            document.getElementById('final-percentage').innerText = `${percentage}%`;
+            document.getElementById('final-correct').innerText = `${score}/${questions.length}`;
+            
+            // Optional: You can add more detailed breakdown here if needed
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            userAnswers = [];
+            answered = false;
+            
+            document.getElementById('results-screen').classList.add('hidden');
+            document.getElementById('quiz-content').classList.remove('hidden');
+            
+            showQuestion(0);
+        }
+
+        // Start the quiz when page loads
+        window.onload = function() {
+            initQuiz();
+        };
+    </script>
+</body>
+</html>
